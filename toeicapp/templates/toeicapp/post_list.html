@@ -1,0 +1,36 @@
+{% extends 'toeicapp/base.html' %}
+
+
+{% block content %}
+<div class="row" width="100%">
+  <div class="col-md-9">
+    <br>
+    <h2>メンタ一覧</h2>
+    <br>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col" width="100px">名前</th>
+          <th scope="col">内容</th>
+          <!-- <th>更新日</th> -->
+        <tr>
+      </thead>
+      <tbody>
+        {% for item in post_list %}
+        <tr>
+          <td><a href="{% url 'toeicapp:post_detail' item.pk %}" style="color: blue;">{{item.title}}</a></td>
+          <td scope="row" style="word-break: break-all;">{{item.content|safe|truncatechars_html:100}}</td>
+          <!-- {% if updated_at %}
+          <td>{{item.updated_at.date}}</td>
+          {% else %}
+          <td>{{item.created_at.date}}</td>
+          {% endif %} -->
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <br>
+    <br>
+  </div>
+</div>
+{% endblock content %}

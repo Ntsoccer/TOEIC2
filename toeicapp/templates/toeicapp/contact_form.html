@@ -1,0 +1,26 @@
+{% extends 'toeicapp/base.html' %}
+
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <br>
+      <br>
+      <div class="btn"><a href="{% url 'toeicapp:asked_question' %}"><i class="fas fa-envelope"></i>よくある質問</a>
+        <p>こちらも参照してみてください。</p>
+      </div>
+      <br>
+      <br>
+      <h1>お問い合わせ</h1>
+      <br>
+      <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="btn btn-primary">送信</button>
+      </form>
+      <br>
+    </div>
+  </div>
+</div>
+{% endblock content %}

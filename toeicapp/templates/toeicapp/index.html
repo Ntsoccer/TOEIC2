@@ -1,0 +1,72 @@
+{% extends "toeicapp/base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Start your project here-->
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h2 class="display-4">Coacher</h2>
+    <p class="lead">TOEICメンタ一覧です</p>
+    <p style="color: red;">※お支払いはメンター詳細ページにてお願いします</p>
+  </div>
+</div>
+<!-- /Start your project here-->
+<br><br>
+<!-- Card deck -->
+<div class="card-group row text-center">
+
+  <!-- Card -->
+  {% for item in post_list %}
+  <div class="col-md-6 col-lg-4">
+    <div class="card index-card mb-4 mr-5 ml-5 text-center w-75">
+
+      <!--Card image-->
+      <div class="view view-index overlay">
+        {% if item.thumbnail %}
+        <img class="card-img-top" src="{{ item.thumbnail.url }}" alt="{{item.title}}">
+        {% else %}
+        <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
+          alt="Card image cap">
+        {% endif %}
+        <a href="{% url 'toeicapp:post_detail' item.id %}">
+          <div class="mask rgba-white-slight"></div>
+        </a>
+      </div>
+
+      <!--Card content-->
+      <div class="card-body index">
+
+        <!--Title-->
+        <h4 class="card-title text-center">{{item.title}}</h4>
+        <hr>
+        <!--Text-->
+        <p class="card-text index-text">{{item.content|safe|truncatechars_html:100}}</p>
+        <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+      </div>
+      <div class="card-body">
+        <a href="{% url 'toeicapp:post_detail' item.id %}" type="button" class="btn btn-light-blue btn-md">More</a>
+      </div>
+      <!-- Card footer -->
+      <div class="card-footer text-muted text-center">
+        <small>
+          {% if item.updated_at %}
+          {{item.updated_at.date}}
+          {% else %}
+          {{item.created_at.date}}
+          {% endif %}
+        </small>
+      </div>
+
+    </div>
+
+    <!-- Card -->
+  </div>
+  {% endfor %}
+
+
+</div>
+
+<!-- Card deck -->
+<br>
+<br>
+{% endblock %}

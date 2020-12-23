@@ -1,0 +1,98 @@
+{% extends 'toeicapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<br><br>
+<div class="row detail">
+
+  <div class="col-md-8">
+    <br>
+    {% if not user.is_authenticated %}
+    <div class="login-text">
+      <p>お支払いをするにはまず<a href="{% url 'toeicapp:login' %}">ログイン</a>してください。</p>
+    </div>
+    <br>
+    {% endif %}
+    <!-- Card -->
+    <div class="card">
+
+      <!-- Card image -->
+      {% if object.thumbnail %}
+      <small><img class="card-img-top" src="{{ object.thumbnail.url }}" alt="{{item.title}}"></small>
+      {% else %}
+      <img class="card-img-top" src="../../../media/images/hari-panicker-2t28IxSTqF4-unsplash-min.jpg"
+        alt="Card image cap">
+      {% endif %}
+
+      <!-- Card content -->
+      <div class="card-body detail-text">
+
+        <!-- Title -->
+        <h3 class="card-title text-center"><a>{{object.title}}</a></h3>
+        <hr>
+        <!-- Text -->
+        <p class="card-text text-container">{{object.content|safe}}</p>
+        <br>
+        <hr>
+        <a href="/" class="btn btn-outline-dark float-left">戻る</a>
+        {% if object.author == request.user %}
+        <a href="{% url 'toeicapp:post_update' object.id%}" class="btn btn-primary">更新</a>
+        <a href="{% url 'toeicapp:post_delete' object.id%}" class="btn btn-danger">削除</a>
+        {% endif %}
+        {% if not request.user.is_authenticated %}
+        <a href="{% url 'toeicapp:login' %}" class="btn btn-outline-dark float-right">ログイン</a>
+        {% endif %}
+      </div>
+
+    </div>
+    <br>
+    <br>
+    <!-- Card -->
+    <div class="row service_menu">
+      <div class="col-md-6 folat-right">
+        <div class="btn">
+          <p>お支払いの際こちらの<a href="{% url 'toeicapp:service' %}" style="font-size: 20px;">利用規約</a>に同意したものとみなします。</p>
+        </div>
+      </div>
+      <br>
+      <div class="col-md-6 float-left">
+        <div class="btn"><a href="{% url 'toeicapp:asked_question' %}" style="font-size: 20px;"><i
+              class="fas fa-envelope"></i>よくある質問</a>
+        </div>
+      </div>
+      {% if user.is_authenticated %}
+      <div class="pay">
+        <form action="" method="POST">
+          {% csrf_token %}
+          <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="{{context.publick_key}}"
+            data-amount="{{context.post.price}}" data-name="メンター名" data-description="{{context.post.title}}"
+            data-image="https://stripe.com/img/documentation/checkout/marketplace.png" data-locale="ja"
+            data-currency="jpy" data-email="{{user.email}}">
+            </script>
+        </form>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="col-md-4">
+    <br>
+    <!-- Card -->
+    <div class="card intro">
+      <div class="card-body">
+        <h4 class="text-center">他のメンター紹介</h4>
+      </div>
+      <ul class="list-group">
+        {% for item in category_posts %}
+        <li class="list-group-item text-center"><a href="{% url 'toeicapp:post_detail' item.id %}">{{item.title}}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <!-- Card -->
+    <br>
+    <br>
+  </div>
+</div>
+<br>
+<br>
+{% endblock content %}

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Coacher</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+  <!-- Bootstrap core CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+  <!--Navbar-->
+  <nav class="navbar navbar-expand-lg navbar-dark blue">
+
+    <!-- Navbar brand -->
+    <a class="navbar-brand" href="/"><strong>Coacher</strong></a>
+
+    <!-- Collapse button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+      aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="basicExampleNav">
+
+      <!-- Links -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'toeicapp:index' %}">ホーム
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'toeicapp:post_list' %}">メンタ一覧
+          </a>
+        </li>
+        {% if request.user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'toeicapp:logout' %}">ログアウト</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'toeicapp:login' %}">ログイン</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'toeicapp:user_create' %}">ユーザー登録</a>
+        </li>
+        {% endif %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'toeicapp:contact_form' %}">お問い合わせ</a>
+        </li>
+      </ul>
+      <!-- Links -->
+    </div>
+    <!-- Collapsible content -->
+
+  </nav>
+  <!--/.Navbar-->
+  <main class="container">
+    {% if messages %}
+    <br>
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}" role="alert">
+      {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+
+    {% block content %}
+    {% endblock %}
+  </main>
+  <!-- Footer -->
+  <footer class="page-footer font-small blue pt-4">
+
+    <!-- Footer Links -->
+    <div class="container-fluid text-center text-md-left">
+
+      <!-- Grid row -->
+      <div class="row">
+
+        <!-- Grid column -->
+        <div class="col-md-6 mt-md-0 mt-3">
+
+          <!-- Content -->
+          <h5 class="text-uppercase">SNS</h5>
+
+          <ul class="snsbtniti">
+            <li><a href="TwitterのプロフィールURL" class="flowbtn6 fl_tw1"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="https://www.instagram.com/toeic_insta" class="flowbtn6 insta_btn6"><i
+                  class="fab fa-instagram"></i></a></li>
+            <li><a href="FacebookページのURL" class="flowbtn6 fl_fb6"><i class="fab fa-facebook-f"></i></a></li>
+          </ul>
+
+        </div>
+        <!-- Grid column -->
+
+        <hr class="clearfix w-100 d-md-none pb-3">
+
+        <!-- Grid column -->
+        <div class="col-md-3 mb-md-0 mb-3">
+
+          <!-- Links -->
+          <h5 class="text-uppercase">About</h5>
+
+          <ul class="list-unstyled">
+            <li>
+              <a href="{% url 'toeicapp:privacy' %}">プライバシーポリシー</a>
+            </li>
+            <li>
+              <a href="{% url 'toeicapp:service' %}">利用規約</a>
+            </li>
+            <li>
+              <a href="{% url 'toeicapp:asked_question' %}">よくある質問</a>
+            </li>
+            <!-- <li>
+              <a href="#!">Link 4</a>
+            </li> -->
+          </ul>
+
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-3 mb-md-0 mb-3">
+
+          <!-- Links -->
+          <!-- <h5 class="text-uppercase">Links</h5>
+
+          <ul class="list-unstyled">
+            <li>
+              <a href="#!">Link 1</a>
+            </li>
+            <li>
+              <a href="#!">Link 2</a>
+            </li>
+            <li>
+              <a href="#!">Link 3</a>
+            </li>
+            <li>
+              <a href="#!">Link 4</a>
+            </li>
+          </ul> -->
+
+        </div>
+        <!-- Grid column -->
+
+      </div>
+      <!-- Grid row -->
+
+    </div>
+    <!-- Footer Links -->
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2020 Copyright:
+      <a href="https://mdbootstrap.com/">Coacher</a>
+    </div>
+    <!-- Copyright -->
+
+  </footer>
+  <!-- Footer -->
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+  <script>
+    const btn = document.querySelector('.stripe-button-el > span');
+    btn.innerText = "カードでお支払い";
+  </script>
+
+</body>
+
+</html>
